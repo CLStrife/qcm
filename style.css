@@ -1,0 +1,14 @@
+#questionnaire{
+
+}
+#valider{
+    background-color: chartreuse;
+}
+#error{
+    background-color: bisque;
+}
+#session{
+    background-color: darkgrey;
+    font-size: large;
+
+}
