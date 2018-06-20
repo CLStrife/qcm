@@ -2,19 +2,23 @@
 
 header('content-type: text/html; charset=utf-8');
 include('Connect.php');
+session_start();
 
-$reponse = $db->query("SELECT valeur FROM reponse JOIN questionreponse ON reponse.idReponse = questionreponse.idReponse
-WHERE questionreponse.idQuestion = 1");
+$reponse = array(
+    ':idQuestion'   => $_SESSION['id'],
+    ':ordre'        => $_POST['numReponse'],
 
-while($donnees = $reponse->fetch())
+);
+$id = array(
+    ':idEtudiant'   =>$_SESSION['idEtudiant']
+);
+
+$requete = "SELECT bonne FROM questionreponse WHERE idQuestion = :idQuestion AND ordre = :ordre";
+$req = $db->prepare($requete);
+$req->execute($reponse);
+$result = $req->fetch();
+if ($result = 1)
 {
-echo
-
-"
-<form id='listReponse' method='post' action='qcm1.php'>
-<input type='radio' name='reponse' value='".$donnees['valeur']."'>".$donnees['valeur']."
-</form>
-";
+    $requete2 = "UPDATE qcmfait SET point = point + 1 WHERE idEtudiant = :idEtudiant";
 }
-$reponse->closeCursor();
 ?>

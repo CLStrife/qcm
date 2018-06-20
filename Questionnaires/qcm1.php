@@ -14,22 +14,44 @@
             include ('../session.php');
             ?>
         </h1>
-            <p id="question">
 
-            </p>
-        <div id="reponse">
+            <div id="question">
 
-        </div>
+            </div>
+        <form id="reponse" method="post" action="GetListReponse.php">
+        </form>
         <input class="btn btn-primary" type="submit" value="Valider" id="valider" >
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(
-            function(){
-                AfficheQuestion();
-            }
-        );
+        var compteur = 0;
+
+        $(document).ready(function() {
+
+
+            var reponse = <?php echo json_encode($_SESSION['questions'], JSON_UNESCAPED_UNICODE);?>;
+
+            console.log(reponse);
+                    document.getElementById("question").innerHTML = (reponse[0]['questions'].libelleQuestion);
+
+                    for(var i = 0; i < reponse[0]['reponses'].length; i++){
+                        document.getElementById("reponse").innerHTML += ("<input type='radio' id='radioButton' name = 'numReponse' value= "+compteur+">" + " " + reponse[0]['reponses'][i].valeur + "<br>");
+
+                    }
+                    //document.getElementById("reponse").innerHTML = (reponse[0]['reponses'][i].valeur);
+                    $("#valider").click(function () {
+                        compteur++;
+                        document.getElementById("question").innerHTML = (reponse[compteur]['questions'].libelleQuestion);
+                        document.getElementById("reponse").innerHTML = " ";
+                        //vide la balise reponse
+                        for(var i = 0; i < reponse[0]['reponses'].length; i++){
+                            document.getElementById("reponse").innerHTML += ("<input type='radio' id='radioButton' name = 'numReponse' value= "+compteur+" >" + " " + reponse[compteur]['reponses'][i].valeur + "<br>");
+                        }
+            });
+        });
+
+
     </script>
 </body>
 </html>
