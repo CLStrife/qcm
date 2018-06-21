@@ -29,7 +29,6 @@
 
         $(document).ready(function() {
 
-
             var reponse = <?php echo json_encode($_SESSION['questions'], JSON_UNESCAPED_UNICODE);?>;
 
             console.log(reponse);
@@ -44,13 +43,22 @@
                         compteur++;
                         document.getElementById("question").innerHTML = (reponse[compteur]['questions'].libelleQuestion);
                         document.getElementById("reponse").innerHTML = " ";
-                        //vide la balise reponse
-                        for(var i = 0; i < reponse[0]['reponses'].length; i++){
-                            document.getElementById("reponse").innerHTML += ("<input type='radio' id='radioButton' name = 'numReponse' value= "+compteur+" >" + " " + reponse[compteur]['reponses'][i].valeur + "<br>");
+                        //vide la div reponse
+                        if (reponse[compteur]['questions'].idQuestion == 4 || reponse[compteur]['questions'].idQuestion == 6)
+                        {
+                            for (var i = 0; i < reponse[compteur]['reponses'].length; i++){
+
+                                document.getElementById("reponse").innerHTML += ("<input type= 'checkbox' name='numReponse' value="+compteur+">" + " " + reponse[compteur]['reponses'][i].valeur + "<br>");
+                            }
+                        }else{
+                            for(var i = 0; i < reponse[compteur]['reponses'].length; i++){
+                                document.getElementById("reponse").innerHTML += ("<input type='radio' id='radioButton' name = 'numReponse' value= "+compteur+" >" + " " + reponse[compteur]['reponses'][i].valeur + "<br>");
+                            }
                         }
+
+
             });
         });
-
 
     </script>
 </body>
