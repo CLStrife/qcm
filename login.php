@@ -11,13 +11,14 @@ $tab = array(
     ':mdp'      => $_POST['mdp']
 );
 
-$requete = "SELECT login, motDePasse FROM etudiants WHERE login = :login AND motDePasse = :mdp";
+$requete = "SELECT login, motDePasse, idEtudiant FROM etudiants WHERE login = :login AND motDePasse = :mdp";
 $req = $db->prepare($requete);
 $result = $req->execute($tab);
 if($req->rowCount() >=1)
 {
     session_start();
     $_SESSION['login'] = $_POST['login'];
+    $_SESSION['idEtudiant'] = $result['idEtudiant'];
     header('Location: Questionnaire.php');
 
     exit();
