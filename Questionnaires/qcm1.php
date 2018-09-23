@@ -55,11 +55,8 @@
                                 document.getElementById("reponse").innerHTML += ("<input type='radio' id='radioButton' name = 'numReponse' value= "+compteur+" >" + " " + reponse[compteur]['reponses'][i].valeur + "<br>");
                             }
                         }
-
-
             });
         });
-
     </script>
 </body>
 </html>
